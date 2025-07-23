@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsNumber, IsPositive } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, IsPositive, IsEnum, MinLength } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
@@ -16,4 +16,14 @@ export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
   photo: string; // ex: URL de l’image ou nom du fichier
+
+  @IsEnum(['IN_STOCK', 'ON_ORDER'])
+  status: 'IN_STOCK' | 'ON_ORDER';
+  
+}
+
+export class SearchByNameDto {
+  @IsString()
+  @MinLength(1)
+  prefix: string;
 }

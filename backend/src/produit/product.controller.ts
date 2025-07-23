@@ -1,6 +1,6 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, Query } from '@nestjs/common';
 import { ProductService } from './product.service';
-import { CreateProductDto } from './dto';
+import { CreateProductDto, SearchByNameDto } from './dto';
 
 @Controller('products')
 export class ProductController {
@@ -11,7 +11,7 @@ export class ProductController {
     return this.productService.createProduct(dto);
   }
 
-  @Get()
+  @Get('get_all')
   async findAll() {
     return this.productService.getAllProducts();
   }
@@ -20,4 +20,11 @@ export class ProductController {
   async ping() {
     return this.productService.pingDb();
   }
+  // in product.controller.ts
+  @Post('search-starts')
+  async searchProductsByPrefix(@Body() dto: SearchByNameDto) {
+    return this.productService.getProductByNamePrefix(dto.prefix);
+  }
 }
+
+

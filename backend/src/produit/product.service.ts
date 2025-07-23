@@ -36,4 +36,16 @@ export class ProductService {
       return { connected: false, error };
     }
   }
+  async getProductByNamePrefix(prefix: string) {
+  return this.prisma.product.findMany({
+    where: {
+      title: {
+        startsWith: prefix,
+        mode: 'insensitive', // so "Gam" matches "game", "Game", etc.
+      },
+    },
+    orderBy: { index: 'asc' },
+  });
+}
+
 }
