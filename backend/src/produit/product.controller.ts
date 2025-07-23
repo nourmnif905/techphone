@@ -20,11 +20,11 @@ export class ProductController {
   async ping() {
     return this.productService.pingDb();
   }
-  // in product.controller.ts
-  @Post('search-starts')
-  async searchProductsByPrefix(@Body() dto: SearchByNameDto) {
-    return this.productService.getProductByNamePrefix(dto.prefix);
+
+  // Correction ici : GET + @Query()
+  @Get('search-filter')
+  async searchProductsWithFilter(@Body() dto: SearchByNameDto) {
+    return this.productService.getProductsByFilters(dto);
   }
 }
-
 

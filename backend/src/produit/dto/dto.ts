@@ -1,4 +1,5 @@
-import { IsString, IsNotEmpty, IsNumber, IsPositive, IsEnum, MinLength } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsString, IsNotEmpty, IsNumber, IsPositive, IsEnum, MinLength, IsOptional, Min, IsIn } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
@@ -23,7 +24,24 @@ export class CreateProductDto {
 }
 
 export class SearchByNameDto {
+  @IsOptional()
   @IsString()
-  @MinLength(1)
-  prefix: string;
+  prefix?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  @Type(() => Number)
+  minPrice?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  @Type(() => Number)
+  maxPrice?: number;
+
+    @IsOptional()
+  @IsString()
+  @IsIn(['name_asc', 'name_desc', 'price_asc', 'price_desc', 'in_stock'])
+  orderBy?: 'name_asc' | 'name_desc' | 'price_asc' | 'price_desc' | 'in_stock';
 }
